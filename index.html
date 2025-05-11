@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Feliz Dia das Mães!</title>
+<style>
+body {
+    background: linear-gradient(135deg, #ff7eb3, #ff758c);
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+h1 {
+    font-size: 3em;
+    color: #fff;
+    margin-top: 40px;
+}
+p {
+    color: #fff;
+    margin-bottom: 20px;
+}
+.btn {
+    background-color: #ff4d6d;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 1em;
+    margin: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    transition: transform 0.2s;
+}
+.btn:hover {
+    transform: scale(1.1);
+}
+.gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+    margin: 40px 0;
+}
+.card {
+    background-color: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    width: 200px;
+}
+.card img {
+    width: 100%;
+    height: auto;
+}
+.card p {
+    color: #333;
+    padding: 10px;
+    font-size: 0.9em;
+}
+#code-box {
+    background-color: #2d2d2d;
+    color: #eee;
+    text-align: left;
+    padding: 20px;
+    border-radius: 12px;
+    margin: 20px auto;
+    width: 80%;
+    min-height: 250px;
+    white-space: pre-wrap;
+    font-family: monospace;
+    font-size: 15px;
+}
+span.keyword { color: #569CD6; }
+span.builtin { color: #4EC9B0; }
+span.string { color: #D69D85; }
+span.comment { color: #6A9955; font-style: italic; }
+span.funcname { color: #DCDCAA; }
+
+/* Confetes estilo chuva */
+.confete {
+    position: fixed;
+    top: -10px;
+    font-size: 20px;
+    pointer-events: none;
+    animation: cair 3s linear infinite;
+    z-index: 999;
+}
+@keyframes cair {
+    0% { transform: translateY(-10px) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+}
+</style>
+</head>
+
+<body>
+
+<h1>Feliz Dia das Mães!</h1>
+<p>Um presente especial para a mulher mais incrível do mundo</p>
+
+<button class="btn" onclick="espalharConfeitos()">Celebrar com Confeitos!</button>
+
+<div class="gallery">
+    {% for foto in fotos %}
+        <div class="card">
+            <img src="/imagens/{{ foto.nome }}" onerror="this.src='https://via.placeholder.com/200?text=Foto+{{ loop.index }}';">
+            <p>{{ foto.mensagem }}</p>
+        </div>
+    {% endfor %}
+</div>
+
+<h2>Como uma boa garota dos programas...</h2>
+<p>Não poderia deixar de pedir um help para a IA e para meu amigo Python!</p>
+
+<div id="code-box"></div>
+<button class="btn" onclick="executarCodigo()">Executar Código</button>
+
+<script>
+// Função confetes (melhorada)
+function espalharConfeitos() {
+    const emojis = ['🎉', '💖', '🌸', '✨', '🎈', '❤️', '💐'];
+    for (let i = 0; i < 100; i++) {
+        const confete = document.createElement('span');
+        confete.classList.add('confete');
+        confete.style.left = Math.random() * 100 + 'vw';
+        confete.style.animationDuration = (2 + Math.random() * 3) + 's';
+        confete.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        document.body.appendChild(confete);
+        // Remover depois de cair
+        setTimeout(() => confete.remove(), 5000);
+    }
+}
+
+// Código colorido
+const codigoColorido = [
+'<span class="comment"># Código especial para a melhor mãe do mundo</span>\n',
+'<span class="keyword">import</span> <span class="builtin">amor</span>\n',
+'<span class="keyword">from</span> <span class="builtin">coração</span> <span class="keyword">import</span> <span class="builtin">gratidão</span>\n\n',
+
+'<span class="keyword">def</span> <span class="funcname">celebrar_dia_das_maes</span>(mãe):\n',
+'    mensagem = <span class="string">"Te amo infinitamente, mãe!"</span>\n',
+'    abraços = <span class="builtin">amor</span>.criar_abraços(quantidade=1000)\n',
+'    beijos = <span class="builtin">amor</span>.criar_beijos(quantidade=1000000)\n\n',
+'    <span class="keyword">return</span> <span class="builtin">gratidão</span>.enviar(\n',
+'        para=mãe,\n',
+'        conteudo=[mensagem, abraços, beijos],\n',
+'        duração=<span class="string">"para sempre"</span>\n',
+'    )\n\n',
+
+'<span class="comment"># Executando o código mais importante da minha vida</span>\n',
+'<span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:\n',
+'    minha_mãe = <span class="builtin">amor</span>.pessoa_mais_especial()\n',
+'    <span class="funcname">celebrar_dia_das_maes</span>(minha_mãe)\n',
+'    <span class="builtin">print</span>(<span class="string">"Feliz Dia das Mães! ❤️"</span>)\n'
+];
+
+let linha = 0, char = 0;
+function executarCodigo() {
+    const box = document.getElementById('code-box');
+    if (linha < codigoColorido.length) {
+        let currentLine = codigoColorido[linha];
+        if (char < currentLine.length) {
+            box.innerHTML += currentLine.charAt(char);
+            char++;
+            setTimeout(executarCodigo, 10);
+        } else {
+            box.innerHTML += '\n';
+            linha++;
+            char = 0;
+            setTimeout(executarCodigo, 100);
+        }
+    }
+}
+</script>
+
+</body>
+</html>
